@@ -1,3 +1,5 @@
+// Deze pagina vertoonde een enkele evenement. En vult hiermee de pagina met benodigde informatie.
+
 <template>
   <div class="event-page-container">
       <div class="header">

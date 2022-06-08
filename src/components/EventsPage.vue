@@ -1,3 +1,5 @@
+// Deze pagina is de lijst aan evenementen. Deze wordt opgeroept op creatie van dit component.
+
 <template>
     <div id="events">
       <div v-for="event in this.events" :key="event.id">

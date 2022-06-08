@@ -1,3 +1,5 @@
+// Dit is de homepagina waarbij de data uit het database wordt gehaald om de een featured evenement te laten zien.
+
 <template>
     <div id="homepage">
         <div class="homeBg">

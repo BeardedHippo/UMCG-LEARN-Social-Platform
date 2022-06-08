@@ -1,3 +1,10 @@
+// Dit is de profielpagina van een lid. Deze is volgestopt met functionaliteiten om het te bewerken, als de gebruiker
+// hier toegang tot zou hebben. Dit wordt gecontroleerd met de firebase auth, door de userId te matchen met de userId
+// dat in het database staat. Vervolgens is er een variabel 'editor' waarbij specifieke onderdelen aan of uit gevinkt
+// kan worden. Met de submit knop wordt alles in zijn geheel naar firebase gestuurd om het profiel te updaten.
+// Tegenwoordig zou ik dit sowieso in veel meer stukken opdelen voor leesbaarheid en functioneel veel meer opdelen en
+// efficiënter maken.
+
 <template>
     <div id="main-container" class="mobile" v-bind:class="{ navheight: editor.topBar }">
         <div v-if="editor.topBar" id="top-bar">
@@ -277,6 +284,7 @@ export default {
         skypeURL: function() {
            return `skype:-${this.currentProfile.skypeName}-?chat`;
         },
+        // Dit houdt bij of de gebruiker wel editing rechten heeft.
         editorPriv: function() {
             if (this.pageLoad == true) {
                 if (firebase.auth().currentUser.uid == this.$route.params.id) {
@@ -288,6 +296,7 @@ export default {
                 return false;
             }
         },
+        // Met deze computed kan er in de HTML ander soort teksten vertoond worden op basis van of de data er is of niet
         hasExpertise: function() {
             if (this.pageLoad == true) {
                 if (firebase.auth().currentUser.uid == this.$route.params.id) {
@@ -325,6 +334,7 @@ export default {
                 return false;
             }
         },
+        // Met deze computed kan er in de HTML ander soort teksten vertoond worden op basis van of de data er is of niet
         hasBiography: function() {
             if (this.pageLoad == true) {
                 if (firebase.auth().currentUser.uid == this.$route.params.id) {
@@ -355,6 +365,7 @@ export default {
             alert('An e-mail with resetinstructions has been send.');
             });
         },
+        // Dit is de editMode waarmee de gebruiker zijn profielbewerker aan of uit kan zetten.
         editMode: function(editor) {
             if(firebase.auth().currentUser.uid == this.$route.params.id) {
                 if (this.$data.editor[editor] == false) {
@@ -383,6 +394,7 @@ export default {
                 }
             }
         },
+        // De research van een gebruiker heeft een los onderdeel waardoor er extra functionaliteiten toegevoegd moest worden.
         editResearchTrigger: function(event) {
             let id = event.target.className - 1;
             let idSelector = this.currentProfile.research[id];
@@ -491,6 +503,7 @@ export default {
         quitEditMode: function() {
             location.reload();
         },
+        // Deze functie stuurt alles dat momenteel in de local state staat naar het database
         updateProfileData: function() {
             let user = firebase.auth().currentUser;
             let firstPartIndex = this.updateProfile.email.indexOf("@");
@@ -545,6 +558,7 @@ export default {
             setTimeout(() => {location.reload()}, 2000);
         }
     },
+    // Alle userdata dat ingeladen wordt
     beforeMount () {
         axios.get('https://learn-demo-6a15f-default-rtdb.firebaseio.com/member/' + this.$route.params.id + '.json').then((response) => {
                 this.currentProfile.firstName = response.data.firstName;
@@ -592,7 +606,8 @@ export default {
                     this.updateProfile.research = response.data.research;
                 }
         });  
-
+        // Controleerd of de gebruiker een profiel heeft of niet, gebruikers krijgen namelijk een 'my profile' item in
+        // het menu.
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.pageLoad = true;

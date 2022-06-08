@@ -1,3 +1,6 @@
+// Dit is de profiel creatie pagina. Hier worden nieuwe leden naartoe geleid als hun account net gemaakt is. Deze pagina is
+// vooral een opstapeling aan invulvelden met database schrijf acties.
+
 <template>
     <div id="profile-container" class="mobile">
         <div class="new-user container" v-if="this.userData.newUser">
@@ -160,6 +163,7 @@ export default {
                 this[selector] = true;
             }   
         },
+        // Dit is het eerste scherm met invulvelden van de profiel creatie
         submitFirstProfile: function() {
             if (!this.$v.firstProfile.$invalid) {
                 let user = firebase.auth().currentUser;
@@ -200,6 +204,7 @@ export default {
                 this.$v.firstProfile.$touch();
             }
         },
+        // Dit is het tweede scherm met invulvelden van de profiel creatie
         submitFirstProfile2: function() {
             if (!this.$v.firstProfile2.$invalid) {
                 let route = this.$router;
@@ -293,6 +298,8 @@ export default {
         }
     },
     beforeCreate () {
+        // Hier wordt gevontroleerd of de gebruiker werkelijk is ingelogd en hoever de gebruiker is met het invullen
+        // van het profiel. (Voor het geval dat er een disconnect of iets dergelijke was)
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 var userName = user.displayName;
@@ -319,7 +326,7 @@ export default {
                     };
                 });
 
-
+                // Dit wordt dan gecontroleerd op basis van de userNameen profielfoto.
                 if (userName === null) {
                     this.userData.newUser = true;
                 } else if (profilePhoto === null) {

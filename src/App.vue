@@ -35,14 +35,6 @@ export default {
     Navigation,
     SymposiumPage
   },
-  data() {
-    return {
-      
-    }
-  },
-  mounted() {
-    console.log(firebase.auth())
-  }
 }
 </script>
 

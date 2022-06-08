@@ -1,3 +1,5 @@
+// Navigatiebalk
+
 <template>
     <div id="navigation">
         <input id="toggle" type="checkbox"/>

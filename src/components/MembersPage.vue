@@ -1,3 +1,6 @@
+// Dit is de ledenpagina waarbij er ook gefiltered kan worden op naam en expertise. Gaandeweg dit bestand leg ik dit uit.
+// Tegenwoordig zou ik dit eerder met computed properties en regex filters aanpakken.
+
 <template id="memberspage">
     <div class="member-page-container">
         <div class="header-container">
@@ -86,16 +89,20 @@ export default {
         }
     },
     created(){
+        // Eerst worden alle leden, interessegroepen en expertises dat aan hen gekoppeld staan opgehaald en in de local state gezet
         this.getMembers()
         this.getInterestGroups()
         this.filterdMembers = this.members
     },
     watch:{
+        // Deze watcher voert steeds de zoekfunctie uit als er een nieuwe input is bij 'member name'. De zoekfunctie
+        // laadt in de 'filterdmembers' dan alleen de leden die relevant zijn aan de zoekopdracht.
         searchName: function(){
             this.searchMatchingName()
         }
     },
     methods:{
+        // Dit zoekt de relevante leden op uit de lijst aan leden.
         searchMatchingName(){
             const currentCharCount = this.searchName.length
 
@@ -117,6 +124,7 @@ export default {
             }
         
         },
+        // Op input laat deze funtie een geüpdated lijst zien van relevante resultaten
         onButtonClick(e){
             let elementName = e.currentTarget.name
 
@@ -169,8 +177,6 @@ export default {
                 }
                 this.members.push(newMember)
 
-                // these functions do not belong here but will not function any other way as for now
-                // async issue
                 this.getExpertises()
                 this.getInterestGroups()
             })
@@ -204,6 +210,7 @@ export default {
             })
             this.countMacthes()
         },
+        // Meerdere filterlijst opties
         trackChangeDropdown(e){
 
             const value = e.currentTarget.value

@@ -1,3 +1,5 @@
+// Een simpele loginpagina
+
 <template>
 <div class="login-form-container">
     <div class="login-container">

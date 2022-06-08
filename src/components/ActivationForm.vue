@@ -1,3 +1,9 @@
+// Dit is het component dat ervoor zorgt dat gebruikers hun accounts kunnen 'activeren' of registreren. Wat hier eigenlijk
+// gebeurt is dat gebruikers een 'activatiecode' krijgen. Op de achtergrond is dit eigenlijk het wachtwoord van een
+// account dat op de achtergrond al vooraf wordt ingevuld. Dus in werkelijkheid logt een persoon in en met het opgegeven
+// email adres maakt die persoon een nieuw account. En de app staat dit pas toe als de gebruiker is ingelogd met het
+// hoofdemail adres.
+
 <template>
     <div id="activation-container">
             <form id="activation-form">
@@ -38,10 +44,11 @@ export default {
             },
 
             succes: false,
-
+            // Dit is het hoofdaccount waarmee de gebruiker inlogd. Zodat de gegevens, die de gebruiker invult,
+            // gebruikt kan worden om een nieuw account te maken.
             domain: {
                 domain: "hippo@demohippo.nl",
-                code: "demohippo"
+                code: "demohippo" // Normaal gesproken zou dit de 'activatiecode' zijn. En vult de gebruiker zijn eigen wachtwoord pas later in.
             },
 
             errorcode: []
@@ -67,7 +74,10 @@ export default {
                 let domain2 = this.domain;
                 let tempDetails = this.activeMail;
                 let vm = this;
-
+                //
+                // Hiermee wordt er ingelogd, en met een serie aan then-callbacks een nieuw account gemaakt.
+                // Tegenwoordig zou ik dit eerder met eigen promises willen oplossen of tenminste async blokken.
+                //
                 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function() {
                     return firebase.auth().signInWithEmailAndPassword(domain2.domain, domain2.code).then(function() {
                         firebase.auth().createUserWithEmailAndPassword(tempDetails.email, 'demo1234').then(() => {
@@ -96,6 +106,8 @@ export default {
         },
     },
     mounted() {
+        // Deze blok controleerde of de gebruiker aan het inloggen was met de email-link of niet. Zo wel dan ging de gebruiker
+        // naar de 'profile creation' scherm.
         let auth = firebase.auth();
         let vm = this;
 

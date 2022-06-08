@@ -1,3 +1,5 @@
+// Een pagina voor het hoofdevenement van de opdrachtgever. De data wordt uit firebase gehaald.
+
 <template>
 	<div id="symposium">
 		<div class="symposiumText">
